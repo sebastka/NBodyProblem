@@ -1,7 +1,6 @@
 #ifndef BODY_H
 #define BODY_H
 
-#include <vector>
 #include "Point.h"
 
 class Body {

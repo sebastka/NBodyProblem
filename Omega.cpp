@@ -1,9 +1,6 @@
 #include <iostream>
-#include <vector>
-#include <math.h>
 
 #include "Point.h"
-#include "Body.h"
 #include "Omega.h"
 
 Omega::Omega(bool verbose, bool save): verbose(verbose), save(save) {

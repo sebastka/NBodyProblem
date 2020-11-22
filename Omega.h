@@ -2,7 +2,6 @@
 #define OMEGA_H
 
 #include <vector>
-#include <iostream>
 #include <fstream>
 #include "Body.h"
 

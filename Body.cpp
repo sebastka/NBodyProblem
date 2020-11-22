@@ -1,8 +1,6 @@
-#include <vector>
 #include <math.h>
 
 #include "Body.h"
-#include "Point.h"
 
 // 6.674 * 10^(-11) m^3 / (kg * s^2)
 #define G 1.0
