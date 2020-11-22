@@ -6,80 +6,41 @@
 #include "Body.h"
 #include "Omega.h"
 
-void Omega::debug() {
+void Omega::print() {
 	std::cout << "[ ";
-	for (int i = 0; i < n; ++i) {
-		std::cout << "[\"" << omega[i]->r.x << "\", \"" << omega[i]->r.y << "\", \"" << omega[i]->r.z << "\"]";
-		if (i < n-1) std::cout << ", ";
-	}
+
+	for (auto body : omega)
+		std::cout << "[\"" << body->r.x << "\", \"" << body->r.y << "\", \"" << body->r.z << "\"], ";
+
 	std::cout << " ], " << std::endl;
 
 }
 
-// Initializing dataset
-Omega::Omega() {
-	// 0
-	omega.push_back(new Body(
-		5.0, 
-		Point(0.0, 0.0, 0.0), 
-      	Point(0.0, 0.0, 0.0), 
-      	Point(0.0, 0.0, 0.0)
-    ));
-
-	// 1
-	omega.push_back(new Body(
-        1.0,
-        Point(0.5, 0.5, 0.0),
-        Point(0.5, -0.5, 0.0),
-        Point(0.0, 0.0, 0.0)
-    ));
-
-	// 2
-	omega.push_back(new Body(
-       	1.0,
-       	Point(0.5, 0.0, 0.0),
-        Point(-0.5, -0.5, 0.0),
-        Point(0.0, 0.0, 0.0)
-    ));
-
-    n = omega.size();
-}
-
 void Omega::run(double dt, double t_0, double t_end) {
-	debug();
-	for(t = t_0; t <= t_end; t += dt) {
+	for(double t = t_0; t <= t_end; t += dt) {
 		update_a();
 		update_rv(dt);
-		//update_r();
-		debug();
+
+		if(verbose)
+			print();
 	}
 }
 
-double Omega::getDistance(const Body* a, const Body* b, bool squared) const {
-	double ds = pow(b->r.x - a->r.x, 2) + pow(b->r.y - a->r.y, 2) + pow(b->r.z - a->r.z, 2);
-
-	return squared ? ds : sqrt(ds);
-}
-
 void Omega::update_a() {
-	Point a(0.0, 0.0, 0.0);
+	for (auto body1 : omega) {
+		Point a = Point(0.0, 0.0, 0.0);
 
-	for (int i = 0; i < n; ++i) {
-		a = Point(0.0, 0.0, 0.0);
+		for (auto body2 : omega)
+			if (body1 != body2)
+				a += G * (body2->m / body1->getDistanceTo(body2, true)) * (body2->r - body1->r);
 
-		for (int j = 0; j < n; ++j) {
-			if (i != j) {
-				a += G * (omega[j]->m / getDistance(omega[i], omega[j]), true) * (omega[j]->r - omega[i]->r);
-			}
-		}
-
-		omega[i]->a = a;
+		body1->setAcceleration(a);
 	}
 }
 
 void Omega::update_rv(double dt) {
-	for (int i = 0; i < n; ++i) {
-		omega[i]->v += omega[i]->a * dt;
-		omega[i]->r += omega[i]->v * dt;
+	for (auto body : omega) {
+		body->v += body->a * dt;
+		body->r += body->v * dt;
 	}
 }
