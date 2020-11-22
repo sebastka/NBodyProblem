@@ -5,7 +5,7 @@
 #include "Omega.h"
 
 int main() {
-    Omega universe(true);
+    Omega universe(true, true);
 
 	// Sun
 	universe.add_body(new Body(

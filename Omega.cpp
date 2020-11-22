@@ -6,6 +6,11 @@
 #include "Body.h"
 #include "Omega.h"
 
+Omega::Omega(bool verbose, bool save): verbose(verbose), save(save) {
+	if(save)
+		handle.open("out.csv");
+}
+
 void Omega::print() {
 	std::cout << "[ ";
 
@@ -13,16 +18,33 @@ void Omega::print() {
 		std::cout << "[\"" << body->r.x << "\", \"" << body->r.y << "\", \"" << body->r.z << "\"], ";
 
 	std::cout << " ], " << std::endl;
+}
 
+void Omega::write() {
+	for (auto body : omega)
+		handle << body->r.x << ", " << body->r.y << ", " << body->r.z << ", ";
+	
+	handle << "\n";
 }
 
 void Omega::run(double dt, double t_0, double t_end) {
+	if(save) {
+		int n = omega.size();
+		for(int i = 0; i < n; ++i)
+			handle << "b" << i << "_rx, b" << i << "_ry, b" << i << "_rz, ";
+		
+		handle << "\n";
+	}
+
 	for(double t = t_0; t <= t_end; t += dt) {
 		update_a();
 		update_rv(dt);
 
 		if(verbose)
 			print();
+		
+		if(save)
+			write();
 	}
 }
 
