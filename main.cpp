@@ -16,7 +16,7 @@ int main() {
 		Point(0.0, 0.0, 0.0), 
 		Point(0.0, 0.0, 0.0), 
 		Point(0.0, 0.0, 0.0)
-    ));
+	));
 
 	// Planet 1: mass = 1
 	universe.add_body(new Body(
