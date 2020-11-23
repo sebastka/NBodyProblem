@@ -8,7 +8,7 @@ int main() {
 	**		verbose: print to stdout
 	**		dave: save to out.csv
 	*/
-    Omega universe(true, true);
+	Omega universe(true, true);
 
 	// Sun: mass = 5, is still and placed at the origin
 	universe.add_body(new Body(
@@ -27,7 +27,7 @@ int main() {
 	));
 
 	// run(delta t, t_0 and t_end)
-    universe.run(0.001, 0.0, 10.0);
+	universe.run(0.001, 0.0, 10.0);
 
-    return 0;
+	return 0;
 }
