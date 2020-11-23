@@ -15,7 +15,7 @@ class Omega {
 
 		void update_a();
 		void update_rv(double dt);
-    	void print();
+		void print();
 		void write();
 
 	public:

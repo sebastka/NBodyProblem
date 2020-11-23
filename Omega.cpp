@@ -20,16 +20,17 @@ void Omega::print() {
 void Omega::write() {
 	for (auto body : omega)
 		handle << body->r.x << ", " << body->r.y << ", " << body->r.z << ", ";
-	
+
 	handle << "\n";
 }
 
 void Omega::run(double dt, double t_0, double t_end) {
 	if(save) {
 		int n = omega.size();
+	
 		for(int i = 0; i < n; ++i)
 			handle << "b" << i << "_rx, b" << i << "_ry, b" << i << "_rz, ";
-		
+
 		handle << "\n";
 	}
 
@@ -39,7 +40,7 @@ void Omega::run(double dt, double t_0, double t_end) {
 
 		if(verbose)
 			print();
-		
+
 		if(save)
 			write();
 	}
