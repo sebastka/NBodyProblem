@@ -8,6 +8,11 @@ Omega::Omega(bool verbose, bool save): verbose(verbose), save(save) {
 		handle.open("out.csv");
 }
 
+Omega::~Omega() {
+	if(save)
+		handle.close();
+}
+
 void Omega::print() {
 	std::cout << "[ ";
 

@@ -20,6 +20,7 @@ class Omega {
 
 	public:
 		Omega(bool verbose = false, bool save = false);
+		~Omega();
 		void add_body(Body* b) { omega.push_back(b); };
 		void run(double dt, double t_0, double t_end);
 };
